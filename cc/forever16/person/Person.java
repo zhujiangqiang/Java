@@ -31,4 +31,16 @@ public class Person implements PersonBaseInfo
 	{
 		return birthday;
 	}
+	
+	/* 转换为字符串 */
+	public String toString()
+	{
+		return getClass() +" 名字："+ name + " 性别：" + tender + " 出生日期：" + birthday;
+	}
+	
+	public static void main(String[] args)
+	{
+		Person p=new Person("Mike","male",1997,12,13);
+		System.out.println(p.toString());
+	}
 }

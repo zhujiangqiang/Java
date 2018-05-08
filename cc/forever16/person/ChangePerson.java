@@ -11,6 +11,8 @@ public class ChangePerson implements ChangePersonBaseInfo
 		this.person=person;
 	}
 	
+	public ChangePerson(){};
+	
 	public void changeName(String name)
 	{
 		this.person.name=name;

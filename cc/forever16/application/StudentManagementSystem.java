@@ -1,14 +1,16 @@
 package cc.forever16.student;
 
-import cc.forever16.person.*;
-import cc.forever16.struct.*;
 import java.util.*;
+
+import cc.forever16.person.student.*;
+import cc.forever16.struct.*;
+
 public class StudentManagementSystem
 {
 	public static void main(String[] args)
 	{
-		Scanner scanner=new Scanner(System.in);
-		Node chain_list=new Node();
+		Scanner scanner = new Scanner(System.in);
+		Node chain_list = new Node();
 		int choose=1;
 		System.out.println("欢迎使用学生信息管理系统\n添加学生信息请按1\n删除学生信息请按2\n获取所有学生的信息请按3\n修改学生信息请按4\n退出请按0");
 		while((choose=scanner.nextInt())!=0)
@@ -29,9 +31,9 @@ public class StudentManagementSystem
 					int month=scanner.nextInt();
 					int day=scanner.nextInt();
 					String tel=scanner.next();
-					Person new_person=new Person(name,tel,tender,email,address,year,month,day);/* 新建一个对象 */
+					Student new_person=new Student(name,tel,tender,email,address,year,month,day);/* 新建一个对象 */
 					Node new_node=new Node();/* 新结点 */ 
-					new_node.person=new_person;
+					new_node.student=new_person;
 					listInsert(chain_list,new_node);
 					break;
 				case 2:

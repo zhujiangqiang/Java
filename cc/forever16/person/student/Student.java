@@ -5,7 +5,8 @@ import java.time.*;
 
 import cc.forever16.person.Person;
 
-public class Person extends Person implements StudentBaseInfo
+/* 学生类继承至人类,并实现学生基本信息接口 */
+public class Student extends Person implements StudentBaseInfo
 {
 	
 	protected String name;
@@ -14,10 +15,10 @@ public class Person extends Person implements StudentBaseInfo
 	protected String email;
 	protected String address;
 	protected LocalDate birthday;
-	protected static int nextid=1;/* 涓嬩竴鍚嶅鐢熺殑id */
-	protected int id=nextid++;/* 璇ュ鐢熺殑id */
+	protected static int nextid=1;/* 下一名学生的id */
+	protected int id=nextid++;/* 该学生的id */
 	
-	public Person(String name,String tel,String tender,String email,String address,int year,int month,int day)
+	public Student(String name,String tel,String tender,String email,String address,int year,int month,int day)
 	{
 		super(name,tender,year,month,day);
 		this.tel=tel;

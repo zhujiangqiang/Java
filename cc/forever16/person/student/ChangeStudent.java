@@ -1,29 +1,31 @@
-package cc.forever16.person;
+package cc.forever16.person.student;
 
 import java.time.*;
 
-import cc.forever16.person.*;
+import cc.forever16.person.student.ChangeStudentBaseInfo;
+import cc.forever16.person.ChangePerson;
 
-public class ChangeStudent extends ChangePerson implements ChangePersonBaseInfo
+/* 继承至改变人类信息的类，实现改变学生信息的接口 */
+public class ChangeStudent extends ChangePerson implements ChangeStudentBaseInfo
 {
-	Person person;
-	public ChangeStudent(Person person)
+	Student student;
+	public ChangeStudent(Student student)
 	{
-		this.person=person;
+		this.student=student;
 	}
 	
 	public void changeTel(String tel)
 	{
-		this.person.tel=tel;
+		this.student.tel=tel;
 	}
 	
 	public void changeEmail(String email)
 	{
-		this.person.email=email;	
+		this.student.email=email;	
 	}
 	public void changeAddress(String address)
 	{
-		this.person.address=address;
+		this.student.address=address;
 	}
 	
 }
