@@ -4,30 +4,41 @@ import java.util.*;
 import java.time.*;
 
 import cc.forever16.person.*;
-import cc.forever16.struct.Node;
+
 public class ChainList
 {
-	private static int length=0;
-	public void listInsert(Node head,Node newNode)/* 在链表末尾插入结点，head为头结点 */
+	private static int length=0;//链表的长度
+	
+	/* 结点类 */
+	private class Node
+	{
+	Person person;/* 储存对象 */
+	Node node;/* 下一个结点 */
+	}
+	
+	/* 在链表末尾插入结点,head为头结点 */
+	public void listInsert(Node head,Node newNode)
 	{
 		/*
-		*错误实例
+		*错误示例
 		*temp=head.node;
 		*for{.....}
 		*temp=newNode;
 		*/
-		Node temp=head;/* 与head引用同一个对象 */
+		Node temp=head;// 与head引用同一个对象
 		for(int i=0;i<ChainList.getLength();i++)
 			temp=temp.node;
-		temp.node=newNode;/* 不能改变变量引用的对象但可以改变对象的属性 */
-		length++;
+		temp.node=newNode;// 不能改变变量引用的对象但可以改变对象的属性
+		length++;// 插入成功则长度加一
 		System.out.println("添加成功！请继续操作！");
 	}
-	public void traverseList(Node head)/* 遍历链表 */
+	
+	/* 遍历链表,head为头结点 */
+	public void traverseList(Node head)
 	{
-		Node temp=head.node;
+		Node temp=head.node;// 引用第一个结点对象
 		int i;
-		if(temp==null)
+		if(temp==null)// 链表为空
 		{
 			System.out.println("表为空");
 			return;
@@ -38,35 +49,14 @@ public class ChainList
 			temp=temp.node;
 		}
 	}
+	
+	/* 获取链表长度 */
 	public static int getLength()
 	{
 		return length;
 	}
-	/* 删除指定位置的结点 */
-	/*
-	public static void listDelete(Node head,int pos)
-	{
-		if(ChainList.getLength()==0)
-		{
-			System.out.println("表为空");
-			return;
-		}
-		if(pos>getLength())
-		{
-			System.out.println("超过表长");
-			return;
-		}
-		Node temp=head;
-		for(int i=1;i<pos;i++)// 获取前一个结点
-		{
-			temp=temp.node;
-		}
-		temp.node=temp.node.node;
-		length--;
-		System.out.println("删除成功！请继续操作！");
-	}
-	*/
-	/* 获取其中一个学生的信息 */
+	
+	/* 根据学生id获取学生信息 */
 	public Person getPerson(Node head,int person_id)
 	{
 		if(ChainList.getLength()==0)
@@ -86,6 +76,8 @@ public class ChainList
 		}
 		return null;
 	}
+	
+	/* 根据学生姓名获取学生信息 */
 	public Person getPerson(Node head,String name)
 	{
 		if(ChainList.getLength()==0)
@@ -95,7 +87,7 @@ public class ChainList
 		}
 		Node temp=head;
 		int i;
-		for(i=1;i<getLength()+1;i++)/* 获取前一个结点 */
+		for(i=1;i<getLength()+1;i++)// 获取前一个结点
 		{
 			temp=temp.node;
 			if(temp.person.getName().equals(name))
@@ -105,6 +97,7 @@ public class ChainList
 		}
 		return null;
 	}
+	
 	/* 删除对应指定的id的学生 */
 	public void listDelete(Node head,int person_id)
 	{
@@ -139,6 +132,7 @@ public class ChainList
 		length--;
 		System.out.println("删除成功！请继续操作！");
 	}
+	
 	/* 删除对应指定的姓名的学生 */
 	public void listDelete(Node head,String name)
 	{
@@ -173,4 +167,5 @@ public class ChainList
 		length--;
 		System.out.println("删除成功！请继续操作！");
 	}
+	
 }
