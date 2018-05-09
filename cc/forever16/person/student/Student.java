@@ -8,13 +8,9 @@ import cc.forever16.person.Person;
 /* 学生类继承至人类,并实现学生基本信息接口 */
 public class Student extends Person implements StudentBaseInfo
 {
-	
-	protected String name;
 	protected String tel;
-	protected String tender;
 	protected String email;
 	protected String address;
-	protected LocalDate birthday;
 	protected static int nextid=1;/* 下一名学生的id */
 	protected int id=nextid++;/* 该学生的id */
 	
@@ -23,6 +19,8 @@ public class Student extends Person implements StudentBaseInfo
 		super(name,tender,year,month,day);
 		this.tel=tel;
 		this.tender=tender;
+		this.address=address;
+		this.email=email;
 		this.birthday=LocalDate.of(year,month,day);
 	}
 	

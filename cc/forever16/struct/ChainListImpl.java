@@ -3,13 +3,13 @@ package cc.forever16.struct;
 import java.util.*;
 import java.time.*;
 
-import cc.forever16.person.*;
+import cc.forever16.person.student.*;
 
 
-public class ChainListImpl<classType> implements ChainList
+public class ChainListImpl<classType> implements ChainList<classType>
 {
-	protected int length=0;//链表的长度
-	protected Node<classType> head = new Node<>();
+	protected int length=0;// 链表的长度
+	protected Node<classType> head = new Node<>();// 头结点
 	
 	/* 在链表末尾插入结点,head为头结点 */
 	public void listInsert(Node newNode)
@@ -20,7 +20,7 @@ public class ChainListImpl<classType> implements ChainList
 		*for{.....}
 		*temp=newNode;
 		*/
-		Node temp=head;// 与head引用同一个对象
+		Node<classType> temp=head;// 与head引用同一个对象
 		for(int i=0;i<getLength();i++)
 			temp=temp.node;
 		temp.node=newNode;// 不能改变变量引用的对象但可以改变对象的属性
@@ -29,13 +29,13 @@ public class ChainListImpl<classType> implements ChainList
 	}
 	
 	/* 在链表指定位置插入结点,head为头结点 */
-	public void listInsert(Node newNode,int pos)
+	public void listInsert(Node<classType> newNode,int pos)
 	{
 		if(pos>getLength()+1){
 			System.out.println("删除位置有误，添加失败!");
 			return;
 		}
-		Node temp=head;// 与head引用同一个对象
+		Node<classType> temp=head;// 与head引用同一个对象
 		for(int i=0;i<pos-1;i++)// 获取前一个结点
 			temp=temp.node;
 		temp.node=newNode;// 不能改变变量引用的对象但可以改变对象的属性
@@ -46,7 +46,7 @@ public class ChainListImpl<classType> implements ChainList
 	/* 遍历链表,head为头结点 */
 	public void traverseList()
 	{
-		Node temp=head.node;// 引用第一个结点对象
+		Node<classType> temp=head.node;// 引用第一个结点对象
 		int i;
 		if(temp==null)// 链表为空
 		{
@@ -73,7 +73,7 @@ public class ChainListImpl<classType> implements ChainList
 			System.out.println("删除位置超过表长，删除失败!");
 			return;
 		}
-		Node temp=head;
+		Node<classType> temp=head;
 		int i;
 		for(i=0;i<pos-1;i++)// 获取前一个结点
 			temp=temp.node;
@@ -89,33 +89,33 @@ public class ChainListImpl<classType> implements ChainList
 			System.out.println("获取位置超过表长，获取失败!");
 			return null;
 		}
-		Node temp=head;
+		Node<classType> temp=head;
 		int i;
 		for(i=0;i<pos;i++)// 获取前一个结点
 			temp=temp.node;
-		return (classType)temp.item;
+		return temp.item;
 	}
 	
 	/* 测试 */
 	public static void main(String[] args)
 	{
-		Person p;
-		ChainListImpl<Person> list=new ChainListImpl<>();
-		Node<Person> newNode=null;
+		Student p;
+		ChainListImpl<Student> list=new ChainListImpl<>();
+		Node<Student> newNode=null;
 		for(int i=0;i<10;i++){
-			p=new Person("Mike","male",1990+i,12,13);
-			newNode=new Node<Person>();
+			p=new Student("Mike","telephone number","male","his_email@qq.com","his_address",1990+i,12,13);
+			newNode=new Node<>();
 			newNode.item=p;
 			list.listInsert(newNode,list.getLength()+1);
 		}
 		list.traverseList();
-		Person pd = list.getObject(10);
+		Student pd = list.getObject(10);
 		System.out.println("第10个位置  "+pd.toString());
 		for(int i=10;i>0;i--){
 			System.out.println(list.getLength());
 			list.listDelete(i);
 			list.traverseList();
-			Person pde = list.getObject(i-1);
+			Student pde = list.getObject(i-1);
 			System.out.println("第"+(i-1)+"个位置  "+pde.toString());
 		}
 	}

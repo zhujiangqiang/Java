@@ -1,4 +1,4 @@
-package cc.forever16.student;
+package cc.forever16.application;
 
 import java.util.*;
 
@@ -7,18 +7,14 @@ import cc.forever16.person.student.*;
 
 public class StudentManagementSystem
 {
-}
-	/*
 	public static void main(String[] args)
 	{
 		Scanner scanner = new Scanner(System.in);
-		StudentChainListImpl list = new StudentChainListImpl();
+		StudentChainListImpl list = new StudentChainListImpl();// 初始化头结点
 		int choose=1;
 		System.out.println("欢迎使用学生信息管理系统\n添加学生信息请按1\n删除学生信息请按2\n获取所有学生的信息请按3\n修改学生信息请按4\n退出请按0");
-		while((choose=scanner.nextInt())!=0)
-		{
-			switch(choose)
-			{
+		while((choose=scanner.nextInt())!=0){
+			switch(choose){
 				case 1:
 					System.out.println("名字：");
 					String name=scanner.next();
@@ -34,7 +30,7 @@ public class StudentManagementSystem
 					int day=scanner.nextInt();
 					String tel=scanner.next();
 					Student new_student=new Student(name,tel,tender,email,address,year,month,day);// 新建一个对象
-					StudentNode new_node=new StudentNode();// 新结点 
+					Node<Student> new_node=new Node<>();// 新结点 
 					new_node.item=new_student;
 					list.listInsert(new_node);
 					break;
@@ -52,7 +48,7 @@ public class StudentManagementSystem
 				case 4:
 					System.out.println("请输入学生的id或姓名(退出请按0)：");
 					String _str=scanner.next();
-					if(Integer.parseInt(_str)==0) break;
+					if(_str.matches("[0-9]+")&&Integer.parseInt(_str)==0) break;
 					Student per;
 					if(_str.matches("[0-9]+"))
 						per=list.getStudent(Integer.parseInt(_str));
@@ -118,12 +114,10 @@ public class StudentManagementSystem
 		}
 	}
 }
-*/
 
-class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> implements StudentChainList
+class StudentChainListImpl extends ChainListImpl<Student>
 {
 	/* 根据学生id获取学生信息 */
-	
 	public Student getStudent(int studentId)
 	{
 		if(getLength()==0)
@@ -131,7 +125,7 @@ class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> i
 			System.out.println("表为空");
 			return null;
 		}
-		StudentNode temp=head;
+		Node<Student> temp=head;
 		int i;
 		for(i=1;i<getLength()+1;i++)
 		{
@@ -145,7 +139,6 @@ class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> i
 	}
 	
 	/* 根据学生姓名获取学生信息 */
-	
 	public Student getStudent(String name)
 	{
 		if(getLength()==0)
@@ -153,7 +146,7 @@ class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> i
 			System.out.println("表为空");
 			return null;
 		}
-		StudentNode temp=head;
+		Node<Student> temp=head;
 		int i;
 		for(i=1;i<getLength()+1;i++)// 获取前一个结点
 		{
@@ -167,7 +160,39 @@ class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> i
 	}
 	
 	/* 删除对应指定的id的学生 */
-	
+	public void listDelete(int StudentId)
+	{
+		if(getLength()==0)
+		{
+			System.out.println("表为空");
+			return;
+		}
+		Node<Student> temp=head;
+		int i;
+		if(temp.node.item.getId()==StudentId)/* 第一个结点就是要删除的结点 */
+		{
+			temp.node=temp.node.node;
+			length--;
+			System.out.println("删除成功！请继续操作！");
+			return;
+		}
+		for(i=1;i<getLength();i++)/* 获取前一个结点 */
+		{
+			if(i==getLength()&&temp.item.getId()!=StudentId)
+			{
+				System.out.println("未找到该学生信息，删除失败！请继续操作！");
+				return;
+			}
+			if(temp.node.item.getId()==StudentId)
+			{
+				break;
+			}
+			temp=temp.node;
+		}
+		temp.node=temp.node.node;
+		length--;
+		System.out.println("删除成功！请继续操作！");
+	}
 	/* 删除对应姓名的学生 */
 	public void listDelete(String name)
 	{
@@ -176,7 +201,7 @@ class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> i
 			System.out.println("表为空");
 			return;
 		}
-		StudentNode temp=head;
+		Node<Student> temp=head;
 		int i;
 		if(temp.node.item.getName().equals(name))// 第一个结点就是要删除的结点
 		{
@@ -202,8 +227,4 @@ class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> i
 		length--;
 		System.out.println("删除成功！请继续操作！");
 	}
-}
-/* 结点类 */
-class StudentNode<Student,classType> extends Node<classType>
-{
 }

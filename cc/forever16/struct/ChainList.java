@@ -3,9 +3,9 @@ package cc.forever16.struct;
 public interface ChainList<classType>
 {
 	/* 在链表末尾插入结点,head为头结点 */
-	public void listInsert(Node newNode);
+	public void listInsert(Node<classType> newNode);
 	/* 在链表指定位置插入结点,head为头结点 */
-	public void listInsert(Node newNode,int pos);
+	public void listInsert(Node<classType> newNode,int pos);
 	/* 遍历链表,head为头结点 */
 	public void traverseList();
 	/* 获取链表长度 */

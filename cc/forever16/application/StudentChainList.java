@@ -3,7 +3,7 @@ package cc.forever16.application;
 import cc.forever16.struct.ChainList;
 import cc.forever16.person.student.Student;
 
-public interface StudentChainList<Student,classType> extends ChainList<classType>
+public interface StudentChainList extends ChainList<Student>
 {
 	/* 根据学生id获取学生信息 */
 	public Student getStudent(int studentId);
