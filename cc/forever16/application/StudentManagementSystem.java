@@ -2,15 +2,17 @@ package cc.forever16.student;
 
 import java.util.*;
 
-import cc.forever16.person.student.*;
 import cc.forever16.struct.*;
+import cc.forever16.person.student.*;
 
 public class StudentManagementSystem
 {
+}
+	/*
 	public static void main(String[] args)
 	{
 		Scanner scanner = new Scanner(System.in);
-		Node chain_list = new Node();
+		StudentChainListImpl list = new StudentChainListImpl();
 		int choose=1;
 		System.out.println("欢迎使用学生信息管理系统\n添加学生信息请按1\n删除学生信息请按2\n获取所有学生的信息请按3\n修改学生信息请按4\n退出请按0");
 		while((choose=scanner.nextInt())!=0)
@@ -31,35 +33,37 @@ public class StudentManagementSystem
 					int month=scanner.nextInt();
 					int day=scanner.nextInt();
 					String tel=scanner.next();
-					Student new_person=new Student(name,tel,tender,email,address,year,month,day);/* 新建一个对象 */
-					Node new_node=new Node();/* 新结点 */ 
-					new_node.student=new_person;
-					listInsert(chain_list,new_node);
+					Student new_student=new Student(name,tel,tender,email,address,year,month,day);// 新建一个对象
+					StudentNode new_node=new StudentNode();// 新结点 
+					new_node.item=new_student;
+					list.listInsert(new_node);
 					break;
 				case 2:
 					System.out.println("请输入学生的id或姓名：");
 					String str=scanner.next();
 					if(str.matches("[0-9]+"))
-						listDelete(chain_list,Integer.parseInt(str));
+						list.listDelete(Integer.parseInt(str));
 					else
-						listDelete(chain_list,str);
+						list.listDelete(str);
 					break;
 				case 3:
-					traverseList(chain_list);
+					list.traverseList();
 					break;
 				case 4:
 					System.out.println("请输入学生的id或姓名(退出请按0)：");
 					String _str=scanner.next();
 					if(Integer.parseInt(_str)==0) break;
-					Person per;
+					Student per;
 					if(_str.matches("[0-9]+"))
-						per=getPerson(chain_list,Integer.parseInt(_str));
+						per=list.getStudent(Integer.parseInt(_str));
 					else
-						per=getPerson(chain_list,_str);
-					ChangePerson to_be_changed=new ChangePerson(per);
+						per=list.getStudent(_str);
+					ChangeStudent to_be_changed=new ChangeStudent(per);
 					int choice;
-					if(per==null)
+					if(per==null){
 						System.out.println("未找到该学生信息");
+						break;
+					}
 					System.out.println("查找到该学生的信息\n"+per.toString());
 					System.out.println("请输入您想修改的信息(名字:1,性别:2,手机号:3,电子邮箱:4,地址:5,出生日期:6,退出请按0)");
 					int pchoose;
@@ -113,4 +117,93 @@ public class StudentManagementSystem
 			}
 		}
 	}
+}
+*/
+
+class StudentChainListImpl<Student,classType> extends ChainListImpl<classType> implements StudentChainList
+{
+	/* 根据学生id获取学生信息 */
+	
+	public Student getStudent(int studentId)
+	{
+		if(getLength()==0)
+		{
+			System.out.println("表为空");
+			return null;
+		}
+		StudentNode temp=head;
+		int i;
+		for(i=1;i<getLength()+1;i++)
+		{
+			temp=temp.node;
+			if(temp.item.getId()==studentId)
+			{
+				return temp.item;
+			}
+		}
+		return null;
+	}
+	
+	/* 根据学生姓名获取学生信息 */
+	
+	public Student getStudent(String name)
+	{
+		if(getLength()==0)
+		{
+			System.out.println("表为空");
+			return null;
+		}
+		StudentNode temp=head;
+		int i;
+		for(i=1;i<getLength()+1;i++)// 获取前一个结点
+		{
+			temp=temp.node;
+			if(temp.item.getName().equals(name))
+			{
+				return temp.item;
+			}
+		}
+		return null;
+	}
+	
+	/* 删除对应指定的id的学生 */
+	
+	/* 删除对应姓名的学生 */
+	public void listDelete(String name)
+	{
+		if(getLength()==0)
+		{
+			System.out.println("表为空");
+			return;
+		}
+		StudentNode temp=head;
+		int i;
+		if(temp.node.item.getName().equals(name))// 第一个结点就是要删除的结点
+		{
+			temp.node=temp.node.node;
+			length--;
+			System.out.println("删除成功！请继续操作！");
+			return;
+		}
+		for(i=1;i<getLength();i++)// 获取前一个结点
+		{
+			if(i==getLength()&&!temp.item.getName().equals(name))
+			{
+				System.out.println("未找到该学生信息，删除失败！请继续操作！");
+				return;
+			}
+			if(temp.node.item.getName().equals(name))
+			{
+				break;
+			}
+			temp=temp.node;
+		}
+		temp.node=temp.node.node;
+		length--;
+		System.out.println("删除成功！请继续操作！");
+	}
+}
+/* 结点类 */
+class StudentNode<Student,classType> extends Node<classType>
+{
 }
