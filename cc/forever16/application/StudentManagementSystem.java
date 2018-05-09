@@ -54,8 +54,6 @@ public class StudentManagementSystem
 						per=list.getStudent(Integer.parseInt(_str));
 					else
 						per=list.getStudent(_str);
-					ChangeStudent to_be_changed=new ChangeStudent(per);
-					int choice;
 					if(per==null){
 						System.out.println("未找到该学生信息");
 						break;
@@ -63,38 +61,38 @@ public class StudentManagementSystem
 					System.out.println("查找到该学生的信息\n"+per.toString());
 					System.out.println("请输入您想修改的信息(名字:1,性别:2,手机号:3,电子邮箱:4,地址:5,出生日期:6,退出请按0)");
 					int pchoose;
-					while((pchoose=scanner.nextInt())!=0)
+					while((pchoose=scanner.nextInt()) != 0)
 					{
 						switch(pchoose)
 						{
 							case 1:
 								System.out.println("新名字：");
 								String aname=scanner.next();
-								to_be_changed.changeName(aname);
+								per.changeName(aname);
 								System.out.println("操作成功！请继续操作");
 								break;
 							case 2:
 								System.out.println("新性别：");
 								String atender=scanner.next();
-								to_be_changed.changeTender(atender);
+								per.changeTender(atender);
 								System.out.println("操作成功！请继续操作");
 								break;
 							case 3:
 								System.out.println("新手机号：");
 								String atel=scanner.next();
-								to_be_changed.changeTel(atel);
+								per.changeTel(atel);
 								System.out.println("操作成功！请继续操作");
 								break;
 							case 4:
 								System.out.println("新地址：");
 								String aaddress=scanner.next();
-								to_be_changed.changeAddress(aaddress);
+								per.changeAddress(aaddress);
 								System.out.println("操作成功！请继续操作");
 								break;
 							case 5:
 								System.out.println("新电子邮箱：");
 								String aemail=scanner.next();
-								to_be_changed.changeEmail(aemail);
+								per.changeEmail(aemail);
 								System.out.println("操作成功！请继续操作");
 								break;
 							case 6:
@@ -102,7 +100,7 @@ public class StudentManagementSystem
 								int ayear=scanner.nextInt();
 								int amonth=scanner.nextInt();
 								int aday=scanner.nextInt();
-								to_be_changed.changeBirthday(ayear,amonth,aday);
+								per.changeBirthday(ayear,amonth,aday);
 								System.out.println("操作成功！请继续操作");
 								break;
 						}
@@ -115,7 +113,7 @@ public class StudentManagementSystem
 	}
 }
 
-class StudentChainListImpl extends ChainListImpl<Student>
+class StudentChainListImpl extends ChainListImpl<Student> implements StudentChainList
 {
 	/* 根据学生id获取学生信息 */
 	public Student getStudent(int studentId)
@@ -160,71 +158,67 @@ class StudentChainListImpl extends ChainListImpl<Student>
 	}
 	
 	/* 删除对应指定的id的学生 */
+	@Override
 	public void listDelete(int StudentId)
 	{
-		if(getLength()==0)
-		{
+		if(getLength()==0){
 			System.out.println("表为空");
 			return;
 		}
 		Node<Student> temp=head;
 		int i;
-		if(temp.node.item.getId()==StudentId)/* 第一个结点就是要删除的结点 */
-		{
+		// 第一个结点就是要删除的结点
+		if(temp.node.item.getId() == StudentId){
 			temp.node=temp.node.node;
 			length--;
 			System.out.println("删除成功！请继续操作！");
 			return;
 		}
-		for(i=1;i<getLength();i++)/* 获取前一个结点 */
-		{
-			if(i==getLength()&&temp.item.getId()!=StudentId)
-			{
-				System.out.println("未找到该学生信息，删除失败！请继续操作！");
-				return;
-			}
-			if(temp.node.item.getId()==StudentId)
-			{
+		// 获取前一个结点
+		for(i=1;i <= getLength();i++){
+			if(temp.node.item.getId() == StudentId){
 				break;
 			}
 			temp=temp.node;
 		}
+		if(i == (getLength() + 1)){
+			System.out.println("未找到该学生信息，删除失败！请继续操作！");
+		}else{
 		temp.node=temp.node.node;
 		length--;
 		System.out.println("删除成功！请继续操作！");
+		}
 	}
+	
 	/* 删除对应姓名的学生 */
 	public void listDelete(String name)
 	{
-		if(getLength()==0)
-		{
+		if(getLength()==0){
 			System.out.println("表为空");
 			return;
 		}
 		Node<Student> temp=head;
 		int i;
-		if(temp.node.item.getName().equals(name))// 第一个结点就是要删除的结点
-		{
+		// 第一个结点就是要删除的结点
+		if(temp.node.item.getName().equals(name)){
 			temp.node=temp.node.node;
 			length--;
 			System.out.println("删除成功！请继续操作！");
 			return;
 		}
-		for(i=1;i<getLength();i++)// 获取前一个结点
-		{
-			if(i==getLength()&&!temp.item.getName().equals(name))
-			{
-				System.out.println("未找到该学生信息，删除失败！请继续操作！");
-				return;
-			}
-			if(temp.node.item.getName().equals(name))
-			{
+		// 获取前一个结点
+		for(i=1;i<=getLength();i++){
+			if(temp.node.item.getName().equals(name)){
 				break;
 			}
 			temp=temp.node;
 		}
+		if(i == (getLength() + 1)){
+			System.out.println("未找到该学生信息，删除失败！请继续操作！");
+		}else{
 		temp.node=temp.node.node;
 		length--;
 		System.out.println("删除成功！请继续操作！");
+		}
 	}
 }

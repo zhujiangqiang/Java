@@ -6,7 +6,7 @@ import java.time.*;
 import cc.forever16.person.Person;
 
 /* 学生类继承至人类,并实现学生基本信息接口 */
-public class Student extends Person implements StudentBaseInfo
+public class Student extends Person implements StudentBaseInfo,ChangeStudentBaseInfo
 {
 	protected String tel;
 	protected String email;
@@ -50,10 +50,32 @@ public class Student extends Person implements StudentBaseInfo
 		return nextid;
 	}
 	
+	public void changeTel(String tel)
+	{
+		this.tel=tel;
+	}
+	public void changeEmail(String email)
+	{
+		this.email=email;
+	}
+	public void changeAddress(String address)
+	{
+		this.address=address;
+	}
+	
 	public String toString()
 	{
 		return "| "+getId()+" "+"| "+getName()+" "+"| "+getTender()+" "+
 			"| "+getTel()+" "+"| "+getEmail()+" "+"| "+getAddress()+" "
 			+"| "+getBirthday();
+	}
+	
+	public static void main(String[] args)
+	{
+		Student stu=new Student("zbf","男","tel","email","address",1999,10,20);
+		System.out.println(stu.toString());
+		stu.changeAddress("广东汕头");
+		stu.changeBirthday(2000,11,11);
+		System.out.println(stu.toString());
 	}
 }
